@@ -1,0 +1,65 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\title{Microtargeting in Political Ad Tech PAP}
+\author{Andrew Beasley }
+\date{September 2020}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+This pre-analysis plan (PAP) outlines our plan for analysis of an experiment running from Sep2-Sep18 with analysis to begin on Sep19. This experiment will look at the effects of microtargeting and budget reallocation on the persuasive effects of political ads online.
+
+\section{Description} 
+In this experiment we will determine if an micro-targeting ad buying strategy (that was built using surrogate metrics) will outperform a simplistic, non-microtargeted ad-buying approach commonly used by political campaigns and agencies (according to in-field surveys). We will be looking at the following metrics: impact on Trump Disapproval, impact on vote choice decisions between Republican Donald Trump and Democrat Joe Biden. In addition, we will attempt to show evidence of heterogenous treatment effects among demographic groups who were each shown the same set of articles
+\section{Hypotheses}
+A “microtargeted” ad-buying strategy will outperform a simplistic strategy across all metrics. We will see heterogeneous treatment effects between demographic groups (i.e. Men age:18-33, Women age: 34-55, etc.)
+\section{Design Plan}
+Participants were previously recruited into a pre-survey “bucket” via Facebook ads. (SEE BAROMETER PAP FOR IN DEPTH EXPLANATION OF PRE-SURVEY RECRUITMENT) Treatment is assigned using Facebook's split testing system. After the treatment ad delivery period, post-survey recruitment ads are again re-targeted to pre-survey respondents.
+In this experiment we will have 4 cells: the Control cell, a cell using a simplistic ad buying strategy, a cell using a micro-targeted ad buying strategy, and a cell using a micro-targeted ad buying strategy with frequent budget adjustments based on ad performance (according to a surrogate metric). This is a randomly controlled trial.
+Participants will not know the treatment group to which they have been assigned.
+\section{Treatment}
+Each treatment cell will be served the same content. This  uses 16 articles (4 each in 4 topics) and these 16 articles are shown to each group. 
+\section{Existing Data}
+As of the date of submission, the data exist but have not yet been quantified, constructed, observed, or reported by anyone - including individuals that are not associated with the proposed study.
+\section{Data Collection Procedure}
+Participants are invited to take a survey (incentivized with 5 dollars for a completed survey). The survey ads are shown on Facebook and Instagram to a population who previously took a survey and were shown the treatment ads. URL parameters and Facebook split tests are used to ensure that survey data is split according to the treatment cell the participants were placed in. Survey ads run for one week after the treatment ads.
+Participants must be at least 18 years old and from our target states of Wisconsin, Michigan, North Carolina, Arizona, and Pennsylvania. Our ideal sample size is a pre-post matched total of 4000 participants. The minimum acceptable size is 2000 pre-post matched participants
+\section{Variables}
+\subsection{Manipulated Variables}
+We will manipulate the level of demographic groupings, as well as the allocation of budget throughout the test. Cell 2 will have demographic combinations of 2 genders and 3 age groups. In Cell 3, budget reallocation will occur every other day according to a surrogacy metric (Dorothy). The top quartile performing ads according to dorothy will have their minimum and maximum spend adjusted up by 25 percent, the next quartile will be adjusted up by 10 percent, followed by a group adjusted down by 10 percent and then the lowest group adjusted down by 25 percent. Starting with the second round of reallocation, any ad showing backlash (a move in Trump Approval opposite our target) will be turned off completely.
+
+\subsection{Measured Variables}
+The outcome variables will be the effect these ad buying strategies have on Trump Approval ratings, the vote choice between Joe Biden and Donald Trump, and enthusiasm to turnout to vote among survey participants. 
+\section{Analyses}
+The following analyses description comes from the Barometer PAP. That PAP includes even more detail regarding the overall Barometer analysis process but the below details are particularly pertinent to this experiment:
+
+Facebook does not return individual-level identifiers when individuals click on ads, which means we need to match pre- and post-respondents in order to utilize the data. We use Segment pixels to match our pre- and post-survey respondents, which past analysis shows provides by far the highest-quality match as measured by the proportion of respondents who report voting for Clinton in 2016 in our presurvey and then Trump in our post-survey, or vice-versa. 
+
+We do not currently use other methods to match pre- and post-respondents. This is because false-positive matches can be particularly problematic when strong partisans from opposing poles appear to match. This does not merely add noise to results---a handful of such false-positives in one "ideological direction" will create false discoveries. 
+
+We will use additional data to use to match pre- and post-surveys for matching after more heavily incentivizing respondents, if these methods meet the match quality of pixel matching, outlined above.
+
+We estimate the average treatment effect using Ordinary Least Squares (OLS). Our preferred specification is to always include the control variables in the specification. We will eventually use linear regression with the Lin (2013) Covariate Adjustment (lm lin) and robust standard errors. We also use the "margins" package to estimate marginal average treatment effects.
+
+\begin{equation} 
+Y_i = \alpha + \beta_1 Treatment_i + \beta_2 Controls_i + \varepsilon_i
+\end{equation}
+
+We estimate heterogeneous treatment effects using OLS, controlling for the pre-survey outcome and other control covariates:
+\begin{equation} 
+Y_i = \alpha + \beta_1 Treatment_i + \beta_2X_i + \beta_3(Treatment_i \times X_i) + \beta_4 Controls_i + \varepsilon_i
+\end{equation} 
+
+Where $Y_i$ are the primary outcome variables and outcome indices, $Treatment_i$ is the indicator for being assigned to treatment, $Control_i$ is the set of control variables, $X_i$ is the covariate for subgroup analysis, and $\varepsilon_i$ is the random error term. 
+
+We check for balance using an ANOVA explaining the variable with the treatment. If treatments have covariate imbalance, the imbalanced covariates will be used as control variables in the specification. 
+
+- We use indices to increase power for our outcome variables (Broockman, Kalla, Sekhon).
+- Given how unusual voting/turnout may be for this election with vote by mail, we will register an updated turnout index, based on what best predicts voting in the 2020 election, once post election turnout data becomes available.
+- We scale our outcome variables so that higher values are favorable to the Democrats (e.g. favorable for Biden and unfavorable for Trump).
+
+
+\end{document}
